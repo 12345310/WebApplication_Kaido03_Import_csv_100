@@ -1,0 +1,42 @@
+﻿@model WebApplication_Kaido03.Models.CsvFile
+
+@{
+    ViewBag.Title = "インポート";
+}
+
+<h2>インポート</h2>
+@using (Html.BeginForm("Import", "Csv", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.UploadFile, htmlAttributes: new { @for = "InputFile", @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("UploadFile", "", new { id = "InputFile", type = "file" })
+                @Html.ValidationMessageFor(model => model.UploadFile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="インポート" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+
+    <p class="h3 text-success">@ViewBag.SuccessMessage</p>
+}
+
+@{
+    @* TODO null チェクしないでスマートに済ませる方法がある気がする *@
+    if (ViewBag.ErrorMessageList != null)
+    {
+        foreach (String error in (List<String>)ViewBag.ErrorMessageList)
+        {
+            <ul>
+                <li class="text-danger">@error</li>
+            </ul>
+        }
+    }
+}

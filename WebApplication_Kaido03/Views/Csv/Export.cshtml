@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "エクスポート";
+}
+
+<h2>エクスポート</h2>
+
+@using (Html.BeginForm("Export", "Csv", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" value="エクスポート" class="btn btn-primary" />
+}
+
